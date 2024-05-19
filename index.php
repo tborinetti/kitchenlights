@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>ARE THE KITCHEN LIGHTS ON</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
   <body>
     <div class="header">
@@ -14,86 +15,39 @@
         <p id='xx'>Lights OFF</p>
       </div>
       <div class="right_screen">
-        <img id="stream" src="http://192.168.1.194:8080/?action=stream" width="960" height="720">
+        <img id="stream" src="http://192.168.1.199:8080/camera" width="960" height="720">
       </div>
     </div>
 
   </body>
 
   <script type="text/javascript">
-      let intervalID;
 
 
-      function changeLights(lightsOn) {
-        if (lightsOn == true) {
+      function changeLights(state) {
+        if (state == "True") {
           document.getElementById('xx').innerHTML = "LIGHTS ON";
-        } else {
+        } else if (state == "False") {
           document.getElementById('xx').innerHTML = "LIGHTS OFF";
         }
-
       }
 
-      // function getPixelColours(callback) {
-      //   const myImg = new Image().;
-      //   console.log(myImg);
-      //
-      //   myImg.onload = () => {
-      //     const context = document.createElement('canvas').getContext('2d');
-      //     context.drawImage(myImg, 0, 0);
-      //     const imgData = context.getImageData(299, 100, 1, 1);
-      //     const pixelData = imgData.data;
-      //
-      //     console.log(pixelData);
-      //     const sumPix = pixelData[0] + pixelData[1] + pixelData[2];
-      //     const avgPix = sumPix / 3;
-      //
-      //     if (avgPix > 70) {
-      //       console.log(avgPix);
-      //       callback(true);
-      //     } else {
-      //       console.log(avgPix);
-      //       callback(false);
-      //     }
-      //
-      //   }
-      // }
-
-      function getPixelColours(callback) {
-        const myImg = new Image();
-        myImg.crossOrigin = "Anonymous";
-
-        myImg.onload = () => {
-          const context = document.createElement('canvas').getContext('2d');
-          context.drawImage(myImg, 0, 0);
-          const imgData = context.getImageData(299, 100, 1, 1);
-          const pixelData = imgData.data;
-
-          console.log(pixelData);
-          const sumPix = pixelData[0] + pixelData[1] + pixelData[2];
-          const avgPix = sumPix / 3;
-
-          if (avgPix > 70) {
-            console.log(avgPix);
-            callback(true);
-          } else {
-            console.log(avgPix);
-            callback(false);
-          }
-
-        }
-
-        myImg.src = 'http://192.168.1.194:8080/?action=stream';
+      function getJsonFile(callback){
+        // const lightsOnData;
+        $.getJSON("info.json", function( data) {
+            let jsonData = data.lightsOn;
+            console.log(jsonData);
+            // lightsOnData = jsonData;
+            callback(jsonData);
+        });
       }
 
-      function run() {
-        getPixelColours(changeLights);
-      }
 
-      setInterval(run, 2000);
+      $(document).ready(function(){
+        setInterval(function() { getJsonFile(changeLights); }, 500);
 
-      // if (myImg.data) {
-      //
-      // }
+      });
+
 
   </script>
 </html>

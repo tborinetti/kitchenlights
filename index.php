@@ -8,14 +8,29 @@
   </head>
   <body>
     <div class="header">
-      <h1>ARE THE KITCHEN LIGHTS ON</h1>
+      <div class="header_container">
+        <h1 id="title_heading">ARE THE KITCHEN LIGHTS ON</h1>
+        <img id="fire_bar" src="images/firebar.gif" alt="">
+      </div>
+      
     </div>
     <div class="main_content">
-      <div class="left_screen">
-        <p id='xx'>Lights OFF</p>
+      <div class="left_container">
+        <div class="left_content">
+          <p id='xx'>Lights OFF</p>
+
+        </div>
+        
       </div>
-      <div class="right_screen">
-        <img id="stream" src="http://192.168.1.199:8080/camera" width="960" height="720">
+      <div class="right_container">
+        <div class="stream_container">
+          <div id="stream_heading">
+            <h1 id="stream_title">KITCHEN CAM 01 </h1>
+            <img src="images/redbar.gif">
+          </div>
+          <img id="stream" src="http://192.168.1.199:8080/camera">
+        </div>
+        
       </div>
     </div>
 

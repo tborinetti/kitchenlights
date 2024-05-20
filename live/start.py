@@ -36,7 +36,6 @@ def checkPixels(img):
 while True:
 	# init stream
 	_, frame = cap.read()
-	# cv2.imshow(stream.name, frame)
 	if cv2.waitKey(1) == ord("q"):
 		break
 	stream.set_frame(frame)

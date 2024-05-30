@@ -15,19 +15,23 @@
       </div>
       
     </div>
-    <div class="main_content">
-      <div class="left_container">
+    <div class="main_content container-fluid">
+      <div class="left_container p-15 col-7">
         <div class="left_content">
-          <p id='xx'>Lights OFF</p>
+          <p id='xx'>
+            <span id="state">NO!!!!!!</span>
+            <img class="lights_off_img" src="images/redbar.gif" alt="" style="height: 10px;">
+            <span id="searching">Searching now...</span>
+          </p>
 
         </div>
         
       </div>
-      <div class="right_container">
+      <div class="right_container p-15 col-5">
         <div class="stream_container">
           <div id="stream_heading">
             <h1 id="stream_title">KITCHEN CAM 01 </h1>
-            <img src="images/redbar.gif">
+            <!-- <img src="images/redbar.gif"> -->
           </div>
           <img id="stream" src="http://192.168.1.199:8080/camera">
         </div>
@@ -39,13 +43,38 @@
   </body>
 
   <script type="text/javascript">
+      function addAlertBox() {
+        const time = new Date().toLocaleTimeString();
+        const width = Math.floor(Math.random() * 90);
+        const height = Math.floor(Math.random() * 60);
+        const text = 
+        `\<div class="alert_box" style="left: ${width}%;top: ${height}%;" \>
+        \<div class="alert_header"\>
+            \<img class="siren_img" src="images/siren.gif"\>
+            \<p\>WARNING\</p\>
 
+        \</div\>
+        \<p\>LIGHTS DETECTED AT\</p\>
+        \<h1\>${time}!!!\</h1\>
+        \<div class="close_button" onclick="this.parentElement.style.display=\'none\';"\>
+            \<img src="images/exit.gif" alt="" srcset=""\>\
+        
+        \</div\>
+        
+    \</div\>`;
+        $(".left_content").append(text);
+      }
 
       function changeLights(state) {
         if (state == "True") {
-          document.getElementById('xx').innerHTML = "LIGHTS ON";
+          addAlertBox();
+          $("img.lights_off_img").replaceWith('<img class="lights_on_img" src="images/warning.gif" alt="" style="height: 300px;">');
+          document.getElementById('state').innerText = "YES!!!!!!";
+          $("#searching").replaceWith('<span id="searching" style="display:none;">Searching now...</span>');
         } else if (state == "False") {
-          document.getElementById('xx').innerHTML = "LIGHTS OFF";
+          document.getElementById('state').innerText = "NO!!!!!!";
+          $("#searching").replaceWith('<span id="searching">Searching now...</span>');
+          $("img.lights_on_img").replaceWith('<img class="lights_off_img" src="images/redbar.gif" alt="" style="height: 10px;">');
         }
       }
 
